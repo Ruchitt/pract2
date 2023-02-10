@@ -1,0 +1,45 @@
+﻿@page
+@model Practical2.IndexModel
+<h1>Product/Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<form method="post">
+    <div class="col-12 text-end">
+        <input type="text" id="userinput" value="@ViewData["catName"]" name="searchText" placeholder="Search...">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ProductId</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>IsActive</th>
+            <th>Category</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Product) {
+        <tr>
+                <td width="10%"> @item.ProductId</td>
+                <td width="15%">@item.Name</td>
+                <td width="15%">@item.Description</td>
+                <td width="15%">@item.Price</td>
+                <td width="15%">@(item.IsActive != false ? "Active" : "InActive")</td>
+                <td width="15%">
+                    <a asp-page="/Category/Index" asp-route-prodname="@item.Name">@item.Category.Name</a>
+                    </td>
+                <td width="25%">
+                <a asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ProductId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
+                 </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,41 @@
+﻿@page
+@model Practical2.Pages.Category.IndexModel
+
+<h2 class="text-primary">Category List</h2>
+<form method="post">
+    <div class="col-12 text-end">
+        <input type="text" id="userinput" name="searchText" value="@ViewData["productName"]" placeholder="Search...">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+<table class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>CategoryId</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Products</th>
+            <th>IsActive</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var obj in Model.Categories)
+        {
+            <tr>
+                <td width="50%"> @obj.CategoryId</td>
+                <td width="30%">@obj.Name</td>
+                <td width="30%">@obj.Description</td>
+                <td width="30%">
+                    @*@foreach(var item in Model.Products.Where(p => p.CategoryId == obj.CategoryId))
+                {
+                @item.Name
+                }*@
+                    @Html.Raw(
+                string.Join(",",Model.Products.Where(p=>p.CategoryId==obj.CategoryId).Select(a=> $"<a href='/Product/Index/?categoryname={obj.Name}'>{a.Name}</a>")))
+                </td>
+                <td width="30%">@obj.IsActive</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
